@@ -10,7 +10,7 @@ export function createExtensionClient(channelWindow,origin){
       if(command==='DISCOVER_V2'&&m.ok&&m.data?.connectorId!==m.connectorId)return;
       cleanup();m.ok?resolve(m.data):reject(new Error(m.error||'O conector não respondeu.'));
     };
-    const timer=setTimeout(()=>{cleanup();reject(new Error('Conector Pulse desconectado. Recarregue a extensão 0.5.1 e atualize esta página no mesmo navegador.'))},timeout);
+    const timer=setTimeout(()=>{cleanup();reject(new Error('Conector Pulse desconectado. Recarregue a extensão 0.5.2 e atualize esta página no mesmo navegador.'))},timeout);
     channelWindow.addEventListener('message',listener);
     channelWindow.postMessage({channel:'patio:request',id,command,args,connectorId:target},origin);
   })}

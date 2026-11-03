@@ -70,7 +70,7 @@ function drawMode(){
 async function focusFacebook(id){try{await extensionRequest('FOCUS',{id})}catch(error){connectHelp();toast(error.message,true)}}
 async function prepareFacebook(id){
   const car=carById(id);if(!car)return;
-  if(!state.connected){window.open(marketplaceUrl,'_blank','noopener');connectHelp();toast('O Facebook foi aberto. Recarregue o conector Pulse 0.5.1 para habilitar o preenchimento automático.');return}
+  if(!state.connected){window.open(marketplaceUrl,'_blank','noopener');connectHelp();toast('O Facebook foi aberto. Recarregue o conector Pulse 0.5.2 para habilitar o preenchimento automático.');return}
   if(state.jobs.has(id))return;
   state.jobs.set(id,'facebook');
   try{
@@ -86,13 +86,13 @@ async function pollFacebook(){
   if(polling)return;polling=true;
   try{
     const info=await extensionRequest('PING',{},5000);state.connected=supportsFacebook(info.version);state.connectionError='';drawMode();
-    if(!state.connected){$('#connection-status').textContent='Atualize o conector para 0.5.1';return}
+    if(!state.connected){$('#connection-status').textContent='Atualize o conector para 0.5.2';return}
     const current=state.cars.filter(c=>c.realJob&&['preparing','ready','attention','error'].includes(c.status));
     if(current.length){const statuses=await extensionRequest('STATUS',{ids:current.map(c=>c.id)});for(const result of statuses.filter(Boolean)){const car=carById(result.id);if(!car?.realJob||car.realJobId!==result.jobId)continue;const status=facebookState(result),report=reportLines(result.report);if(car.status!==status||car.phase!==result.phase||car.progressAt!==result.progressAt){const next={...car,status,phase:result.phase||'',progress:status==='preparing'?5:100,progressAt:result.progressAt,report,updated:Date.now()};await write(next);if($('#review').open&&state.reviewId===next.id)drawReview(next);if(status!==car.status&&status==='ready')toast(`${car.brand} ${car.model}: preenchimento confirmado pelo conector.`)}}}
   }catch(error){state.connected=false;state.connectionError=error.message;drawMode()}finally{polling=false}
 }
 document.querySelectorAll('[data-mode]').forEach(button=>button.onclick=()=>{state.mode=button.dataset.mode;try{localStorage.setItem('pulse-mode',state.mode)}catch{}drawMode();render();pollFacebook()});
-$('#connect').onclick=connectHelp;$('#close-connector').onclick=()=>$('#connector').close();$('#recheck-connector').onclick=async()=>{await pollFacebook();if(state.connected){$('#connector').close();toast('Conector conectado. Clique em Preparar no veículo.')}else toast('Conector não encontrado. Recarregue a extensão 0.5.1 e depois esta página no mesmo navegador.',true)};
+$('#connect').onclick=connectHelp;$('#close-connector').onclick=()=>$('#connector').close();$('#recheck-connector').onclick=async()=>{await pollFacebook();if(state.connected){$('#connector').close();toast('Conector conectado. Clique em Preparar no veículo.')}else toast('Conector não encontrado. Recarregue a extensão 0.5.2 e depois esta página no mesmo navegador.',true)};
 $('#copy-extensions').onclick=async()=>{await navigator.clipboard.writeText(navigator.userAgent.includes('Edg/')?'edge://extensions':'chrome://extensions');toast('Endereço copiado. Cole na barra de endereços do navegador.')};
 async function start(){try{hydrate();state.cars=await store.initialize();render();drawMode();pollFacebook();setInterval(()=>{if(!document.hidden)pollFacebook()},3000)}catch(error){$('#cards').replaceChildren(el('div','empty',error.message),btn('Tentar novamente',start,'button secondary'));toast(error.message,true)}}
 start();

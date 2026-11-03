@@ -2,7 +2,7 @@
 
 Painel público de estoque, com dois modos explícitos:
 
-- **Facebook real (padrão):** abre o formulário do Marketplace e solicita o preenchimento à extensão Pulse 0.5.1 no mesmo navegador. Publicar é uma ação manual, feita pelo usuário no Facebook.
+- **Facebook real (padrão):** abre o formulário do Marketplace e solicita o preenchimento à extensão Pulse 0.5.2 no mesmo navegador. Publicar é uma ação manual, feita pelo usuário no Facebook.
 - **Simulação:** demonstra preparação, revisão, publicação e venda sem atuar nas plataformas externas.
 
 O site não exige login. Para preencher no Marketplace, o usuário precisa estar conectado ao Facebook no próprio navegador e ter o conector instalado. O site não recebe senhas, cookies ou tokens da conta.
@@ -30,7 +30,7 @@ Restauração da demo remove somente os dados deste painel neste navegador. Ela 
 
 O conector aceita comandos apenas da origem publicada exata e dos painéis locais de desenvolvimento. Os registros são separados por origem. O script do Facebook atua somente em abas vinculadas por uma tarefa criada pelo painel. Não há leitura de credenciais nem acesso liberado a outros sites Netlify.
 
-O painel escolhe uma instância do conector e direciona os comandos para ela. Isso impede que duas cópias instaladas abram duas abas para o mesmo pedido. A versão 0.5.1 usa comandos novos que a 0.5.0 ignora; recarregue a extensão atualizada e o painel para ativar a correção.
+O painel escolhe uma instância do conector e direciona os comandos para ela. Isso impede que duas cópias instaladas abram duas abas para o mesmo pedido. A versão 0.5.2 usa comandos novos que a 0.5.0 ignora; recarregue a extensão atualizada e o painel para ativar a correção.
 
 ## Rodar e verificar
 
