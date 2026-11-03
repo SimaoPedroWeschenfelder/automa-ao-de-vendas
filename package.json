@@ -1,1 +1,1 @@
-{"name":"pulse-demo","version":"1.0.0","private":true,"type":"module","scripts":{"test":"node --test demo.test.js","start":"node serve.mjs","build":"node --test demo.test.js"},"engines":{"node":">=20"}}
+{"name":"pulse-demo","version":"1.1.0","private":true,"type":"module","scripts":{"test":"node --test demo.test.js facebook.test.js","start":"node serve.mjs","build":"node --test demo.test.js facebook.test.js"},"engines":{"node":">=20"}}
