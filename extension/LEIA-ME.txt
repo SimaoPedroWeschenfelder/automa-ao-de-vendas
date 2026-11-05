@@ -1,0 +1,125 @@
+PÁTIO — PILOTO MARKETPLACE 0.4 · 03/11/2026
+
+INSTALAR / ATUALIZAR
+Chrome: abra chrome://extensions. Edge: abra edge://extensions.
+Ative Modo do desenvolvedor, clique em Carregar sem compactação e selecione
+esta pasta marketplace-piloto (a que contém manifest.json).
+Se já instalou, clique em Recarregar no cartão da extensão. Reabra o painel.
+O teste local não exige cadastro pago de desenvolvedor nem publicação na loja.
+O controle do navegador do Codex não abre essas páginas internas: esta etapa
+precisa ser feita manualmente.
+
+PREPARAÇÃO AUTOMÁTICA
+1. Entre no Facebook no mesmo perfil e navegador em que instalou a extensão.
+2. Abra o Pátio pelo ícone da extensão OU http://127.0.0.1:4178 no mesmo navegador. O painel local deve mostrar EXTENSÃO CONECTADA · 0.4.0.
+3. Cadastre ou importe UM carro real, com informações e fotos autorizadas.
+4. Clique em Preparar. O agente abre a aba EM SEGUNDO PLANO e começa sozinho, sem outro botão. Sua aba ativa permanece como estava.
+5. Ele seleciona Carro/picape, ano e fabricante; preenche modelo, preço,
+   quilometragem e descrição; seleciona câmbio e combustível cadastrados;
+   tenta anexar as fotos e acompanha o contador de fotos do Facebook.
+6. O painel lateral informa o que foi preenchido e as pendências.
+7. Revise campos, cidade, fotos e condições antes de publicar manualmente.
+Não clique em Tentar novamente durante a preparação. Esse botão é só para
+uma falha ou ajuste. O agente preserva valores de texto já preenchidos.
+Ao recarregar a aba, a preparação não é repetida automaticamente, para não
+sobrescrever sua revisão. Reiniciar o navegador perde a associação das abas;
+abra uma nova preparação pelo painel se necessário.
+
+DADOS QUE O AGENTE NÃO INVENTA
+Informe cidade/UF, carroceria e cores se quiser tentar preencher esses campos.
+A seleção de cidade só é confirmada quando uma sugestão corresponde exatamente.
+Caso contrário, fica pendente para você escolher a localização correta.
+O agente não marca declarações de ausência de danos/pendências e não presume
+estado de conservação. Confira as opções restantes no Facebook.
+As descrições usam um modelo de texto, SEM IA generativa ou chave de API.
+
+FOTOS
+Até 20 imagens JPG, PNG ou WebP, 5 MB cada e 25 MB no total por carro.
+As fotos são salvas localmente em IndexedDB na prévia e na extensão.
+Só confirme a preparação após verificar as miniaturas e o processamento real.
+Uma mensagem de arquivos enviados não garante que o Facebook aceitou o upload.
+Guarde as fotos originais: apagar dados/desinstalar a extensão pode removê-las.
+
+TRANSFERIR CADASTRO ENTRE NAVEGADORES / PAINÉIS
+1. Recarregue a página do painel onde o carro está salvo.
+2. Selecione o carro e clique em Exportar cadastros. Sem seleção, exporta todos.
+3. No painel de destino, clique em Importar cadastros e selecione o JSON gerado.
+O arquivo inclui as fotos. Guarde-o com cuidado: é uma cópia dos seus cadastros.
+Os bancos locais continuam separados, mas clicar Preparar no painel local envia o carro e as fotos diretamente à extensão. Não é necessário exportar para preparar no mesmo navegador. Exportar/importar serve para transferir entre navegadores.
+A importação valida os dados e trata os novos carros como cadastros novos.
+Não importa estados de publicação, links nem associações de abas.
+
+LOTE
+Selecione os carros e clique em Preparar selecionados. Cada carro abre uma aba
+com preparação automática. Comece com um carro antes de tentar cinco.
+Confira cada aba: campos personalizados, idioma e mudanças do Facebook podem
+interromper a preparação. Não prepare de novo carros já publicados.
+
+PUBLICAÇÃO / VENDA
+O agente NÃO clica em Avançar, Publicar, Excluir ou Marcar como vendido.
+Após publicar, informe o link do anúncio em Revisar no painel.
+Vendeu? abre o anúncio registrado. Marque como vendido no Facebook e confirme
+no painel. Publicação e retirada são informadas pelo responsável, não verificadas
+pelo servidor do Facebook. Exclusão automática não faz parte desta versão.
+
+PRIVACIDADE
+A extensão conecta o painel local em http://127.0.0.1:4178 e executa o assistente nas páginas declaradas do Marketplace. Ela só
+prepara uma aba vinculada a um carro pelo botão Preparar. Não lê cookies/senhas.
+Ao clicar Preparar, os dados e fotos são preenchidos no formulário do Facebook
+automaticamente e podem ser processados pela Meta antes da publicação.
+O piloto não resolve CAPTCHA, autenticação ou verificação de identidade.
+Respeite as permissões e condições de uso da plataforma.
+
+TESTES LOCAIS
+npm test
+node preview.mjs
+Prévia: http://127.0.0.1:4178
+Simulação de preenchimento: http://127.0.0.1:4178/marketplace/create/vehicle
+Essa simulação NÃO é o Facebook. Não publique dados fictícios na plataforma.
+A prévia permite cadastrar/fotografar/exportar/importar dados. Para o botão
+Preparar atuar no Facebook, use o mesmo navegador da extensão instalada e confira o indicador EXTENSÃO CONECTADA. O navegador interno do Codex tem armazenamento e extensões próprios; não compartilha a conexão do Chrome/Edge.
+Ctrl+C encerra a prévia. Os dados da prévia antiga são migrados sem substituição
+dos cadastros já atualizados no banco novo.
+
+NOVIDADES DA VERSÃO 0.4
+- Indicador no cartão do veículo: azul enquanto prepara, verde quando o
+  preenchimento foi confirmado sem pendências, amarelo quando há algo a revisar
+  ou a tarefa deixa de responder, vermelho quando há falha.
+- Verde significa PREENCHIDO PARA REVISÃO. Não significa anúncio publicado.
+- A preparação abre abas sem ativá-las. Não é necessário acompanhar a execução.
+- O assistente do Facebook fica recolhido por padrão; abra detalhes se desejar.
+- Cliques simultâneos no mesmo cadastro reutilizam a aba vinculada. Se alterar
+  dados durante uma preparação, aguarde ou feche a aba antes de enviar novamente.
+- Cada tarefa tem um identificador. Relatórios atrasados de abas antigas são
+  ignorados. Uma aba fechada ou falha ao navegar não apaga o cadastro.
+- Fotos repetidas, corrompidas, tipo divergente e números inválidos são rejeitados.
+  Você pode remover fotos e escolher qual será a foto principal.
+- Um erro no lote não impede a tentativa dos outros carros selecionados.
+- A edição de dados invalida o resultado anterior e exige nova preparação.
+- Extensões antigas precisam ser recarregadas antes de usar o fluxo novo.
+
+CADASTRO MAIS COMPLETO
+Abra "Mais informações do veículo": ano de fabricação, motor, potência em cv,
+portas, lugares, condição, opcionais, histórico de manutenção e garantia.
+Esses detalhes entram na descrição usando apenas o que você informou.
+Não há consulta automática a ficha técnica, histórico, placa ou chassi.
+Informe cidade, câmbio, combustível e fotos para reduzir pendências na revisão.
+Nenhuma declaração de ausência de danos ou pendências é marcada automaticamente.
+A descrição montada tem limite local de 5.000 caracteres.
+
+LIMITES DA VERIFICAÇÃO 0.4
+20 testes automatizados e simulações de navegador passaram, incluindo indicadores
+verde/amarelo e transferência de tarefas. A extensão 0.4 precisa ser recarregada
+no navegador do usuário para validar o fluxo completo no Facebook real.
+Mudanças no formulário e processamento de fotos ainda podem exigir intervenção.
+VERSÃO 0.5 — PULSE PÚBLICA
+Recarregue esta extensão. Ela agora se chama Pulse • Conector Marketplace e
+aceita https://pulse-vendas-demo.netlify.app/ além dos painéis locais.
+Abra a Pulse no mesmo navegador, selecione Facebook real e confirme que o
+indicador mostra Conector Pulse conectado. Clique Preparar para preencher o
+formulário real. O conector não clica em Publicar. Exemplos são fictícios;
+use-os somente para conferir o preenchimento sem publicar.
+
+0.5.1: escolhe uma única instância do conector por painel. Recarregue a extensão e o site para corrigir a abertura por cópias duplicadas.
+
+0.5.2: reconhece o preço formatado em reais e seleciona a cidade após ativar o campo de localização. Mantém a escolha de um único conector.

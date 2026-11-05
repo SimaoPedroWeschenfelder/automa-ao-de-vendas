@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Pulse: servidor local (F5)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/serve.mjs",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "skipFiles": ["<node_internals>/**"]
+    }
+  ]
+}

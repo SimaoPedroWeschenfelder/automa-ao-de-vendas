@@ -1,0 +1,12 @@
+{
+  "git.autofetch": false,
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/.netlify/**": true,
+    "**/.local/**": true
+  },
+  "search.exclude": { "**/*.zip": true, "**/.local/**": true },
+  "files.associations": { "*.mjs": "javascript" }
+}

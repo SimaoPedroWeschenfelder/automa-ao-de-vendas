@@ -1,0 +1,9 @@
+{
+  "name": "pulse-conector-marketplace",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/model.test.js tests/task-manager.test.js tests/bridge-policy.test.js tests/panel-bridge.test.js",
+    "preview": "node preview.mjs"
+  }
+}

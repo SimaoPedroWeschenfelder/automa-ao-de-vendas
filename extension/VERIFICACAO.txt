@@ -1,0 +1,59 @@
+VERIFICAÇÃO DO PILOTO 0.4 · 03/11/2026
+
+ATUALIZAÇÃO 0.3
+- Corrigido: painel local agora envia cadastro e fotos à extensão no mesmo navegador.
+- Indicador de conexão e versão disponível no painel; relatório volta automaticamente.
+- Teste em navegador do canal local e do código real do background (APIs de abas simuladas):
+  sete verificações passaram — versão, envio, aba única, carro correto, início único,
+  retorno do relatório e rejeição de origem/cadastro inválidos.
+- A extensão instalada precisa ser recarregada manualmente uma vez para ativar a 0.3.
+- O fluxo completo no Facebook real ainda aguarda essa atualização no navegador do usuário.
+
+PASSOU
+- Quatro testes Node: validação de cadastro, links, descrição e backup/fotos.
+- Sintaxe dos scripts do painel, extensão e armazenamento da prévia.
+- Cadastro com imagem na prévia: foto e dados permanecem após recarregar.
+- Exportar e importar cadastro com foto: sem duplicar o carro no painel testado.
+- Simulação em navegador: início automático, seleção de tipo de veículo, ano,
+  fabricante, câmbio e combustível; preenchimento de textos; foto anexada;
+  preservação de preço existente e nenhuma publicação.
+- Inspeção da sessão real do Facebook no Edge: caminho de criação de veículo,
+  rótulos e estrutura de seletores e upload de imagens identificados.
+  Selecionados apenas Carro/picape e Volkswagen; nenhum anúncio foi publicado.
+
+AINDA NÃO VERIFICADO
+- Execução da extensão 0.3 instalada no navegador com o T-Cross do usuário.
+- Upload real e processamento das fotos do T-Cross no Facebook.
+- Reconhecimento da sugestão de cidade na conta real.
+- Preparação de cinco abas simultâneas na conta do usuário.
+- Troca de mensagens de tarefas entre extensão instalada e aba do Facebook.
+
+LIMITAÇÕES
+- Teste simulado não prova funcionamento completo no Facebook real.
+- Publicação e retirada são manuais; estados do painel são informados pelo usuário.
+- Páginas internas de extensões são bloqueadas pela ferramenta de navegador:
+  carregar/recarregar a extensão deve ser feito manualmente.
+- O cadastro T-Cross não estava no painel da sessão que o Codex conseguiu ler.
+  Para preparar no navegador de origem não é mais necessário exportar: a 0.3
+  envia o cadastro do painel local diretamente à extensão nesse navegador.
+
+ATUALIZAÇÃO 0.4
+PASSOU:
+- 20 testes Node de dados, fotos, detalhes, estados e controle de tarefas.
+- Abertura em segundo plano: active:false, sem ativar a aba na navegação.
+- Oito cliques simultâneos no mesmo carro geram uma única aba vinculada.
+- Início único, bloqueio de dados alterados durante a preparação, relatórios
+  atrasados ignorados e progresso tardio sem apagar o resultado final.
+- Recuperação de falha de navegação e aba fechada, sem apagar o cadastro.
+- Fotos inválidas/repetidas e formatos numéricos ambíguos rejeitados.
+- Extensão antiga não inicia o fluxo novo sem atualização.
+- Sete verificações de integração do painel com o background em navegador simulado.
+- Simulação de formulário: preenchimento com indicador VERDE e cenário com
+  pendências com indicador AMARELO; nenhuma publicação.
+- Cadastro de detalhes opcionais pela interface, persistência após recarregar e
+  presença dos dados na descrição. Somente o carro fictício de demonstração foi editado.
+
+PENDENTE:
+- Validar a extensão 0.4 instalada no Facebook real, inclusive execução em abas
+  de segundo plano e processamento real das fotos do usuário.
+- Nem todos os erros possíveis de versões futuras do Facebook são previsíveis.

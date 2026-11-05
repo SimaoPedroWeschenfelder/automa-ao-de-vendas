@@ -1,54 +1,46 @@
-# Pulse — Impulsionando vendas
+# Pulse — estoque e anúncios
 
-Painel público de estoque, com dois modos explícitos:
+Painel de uso real para cadastrar veículos e preparar o formulário do Facebook Marketplace com o conector Pulse 0.5.2. A revisão e a publicação são feitas pelo responsável no Facebook.
 
-- **Facebook real (padrão):** abre o formulário do Marketplace e solicita o preenchimento à extensão Pulse 0.5.2 no mesmo navegador. Publicar é uma ação manual, feita pelo usuário no Facebook.
-- **Simulação:** demonstra preparação, revisão, publicação e venda sem atuar nas plataformas externas.
+## Fluxo
 
-O site não exige login. Para preencher no Marketplace, o usuário precisa estar conectado ao Facebook no próprio navegador e ter o conector instalado. O site não recebe senhas, cookies ou tokens da conta.
+1. Cadastre os dados e as fotos reais do veículo.
+2. Clique em **Preparar**. O conector abre uma aba em segundo plano e preenche o formulário.
+3. Aguarde o aviso verde **Para revisar**. Pendências e falhas têm estados próprios.
+4. Revise e publique pelo Facebook. Na Pulse, use **Já publiquei · registrar link** para registrar o anúncio existente.
+5. Após a venda, **Marcar vendido** atualiza o estoque local. A remoção ou atualização do anúncio é feita no Facebook; não há retirada automática nesta versão.
 
-## Primeira conexão ao Facebook
+Não há modo de simulação nem veículos fictícios no estoque operacional. Webmotors não está disponível nesta versão.
 
-1. Baixe `pulse-conector.zip` no painel e extraia o arquivo.
-2. No Chrome ou Edge, abra a página de extensões, ative Modo do desenvolvedor e use **Carregar sem compactação** na pasta que contém `manifest.json`.
-3. Se já usa o protótipo anterior nesta pasta, recarregue a extensão para ativar a versão 0.5. O nome passa a ser **Pulse • Conector Marketplace**.
-4. Atualize `https://pulse-vendas-demo.netlify.app/` no mesmo navegador. O painel deve mostrar **Conector Pulse conectado**.
-5. Entre no Facebook e clique **Preparar** no veículo. O conector abre a aba em segundo plano, preenche os campos identificados e envia as fotos.
-6. Confira o relatório, os campos e as miniaturas no Facebook. O conector não clica em **Avançar**, **Publicar**, **Excluir** ou **Marcar como vendido**.
+## Dados locais
 
-Sem o conector, clicar em Preparar abre o formulário do Facebook e mostra as instruções de conexão. Isso não é apresentado como preenchimento concluído. O indicador verde depende do relatório do conector; pendências ficam amarelas e falhas ficam vermelhas.
+O painel não exige login e não tem servidor de cadastros. Os dados e as fotos ficam no IndexedDB deste navegador e desta origem; não são compartilhados entre computadores. Ao preparar um anúncio, os dados e as fotos são enviados ao formulário do Facebook pela extensão. Senhas, cookies e tokens da conta não são lidos pelo painel.
 
-## Dados de apresentação
+Use **Baixar backup** no rodapé para exportar um JSON com os cadastros e fotos. Não limpe os dados do navegador sem guardar uma cópia.
 
-Há seis veículos fictícios, com imagens ilustrativas geradas por IA. As especificações são exemplos, não uma ficha técnica verificada nem uma oferta comercial. Os exemplos podem ser usados para testar o formulário **sem publicar**. No teste real a descrição recebe o aviso **TESTE DE DEMONSTRAÇÃO PULSE — NÃO PUBLICAR**.
+A versão operacional usa o banco `pulse-workspace-v1`. O banco antigo `pulse-public-demo-v1` é preservado. Os seis exemplos padrão ficam no banco antigo; cadastros próprios são copiados para o novo estoque como rascunhos que exigem revisão. Não há promoção de publicação simulada para anúncio real. Fotos do usuário são preservadas. Registros anteriores editados sobre um dos seis IDs de exemplo continuam preservados no banco antigo.
 
-A imagem de cada exemplo é extraída individualmente da folha de imagens antes de ser enviada ao formulário. Fotos adicionadas pelo usuário são preservadas. Dados e fotos ficam no IndexedDB do navegador; ao preparar no modo real são enviados ao formulário do Facebook e podem ser processados pela Meta antes da publicação.
+## Conector
 
-Restauração da demo remove somente os dados deste painel neste navegador. Ela não fecha nem apaga rascunhos do Facebook. Publicação e retirada automáticas não fazem parte desta versão. Webmotors continua sendo apenas uma opção de simulação.
+Baixe o ZIP pelo botão de conexão, extraia e carregue a pasta com `manifest.json` nas extensões do Chrome ou Edge em **Carregar sem compactação**. Se já está instalado, recarregue a mesma cópia. Use o painel no navegador onde o Facebook está conectado.
 
-## Segurança do conector
+O conector aceita somente a origem publicada exata e os painéis locais autorizados. Os comandos são direcionados a uma única instância, evitando duas abas quando há cópias instaladas. O conector não clica em Publicar, Excluir ou Marcar vendido.
 
-O conector aceita comandos apenas da origem publicada exata e dos painéis locais de desenvolvimento. Os registros são separados por origem. O script do Facebook atua somente em abas vinculadas por uma tarefa criada pelo painel. Não há leitura de credenciais nem acesso liberado a outros sites Netlify.
+## Desenvolvimento
 
-O painel escolhe uma instância do conector e direciona os comandos para ela. Isso impede que duas cópias instaladas abram duas abas para o mesmo pedido. A versão 0.5.2 usa comandos novos que a 0.5.0 ignora; recarregue a extensão atualizada e o painel para ativar a correção.
-
-## Rodar e verificar
-
-Requer Node.js 20 ou superior, sem instalação de dependências:
+Requer Node.js 20 ou superior, sem dependências:
 
 ```sh
-npm test
 npm start
+npm run check
 ```
 
-Abra `http://127.0.0.1:4180`. O conector também aceita esse endereço para desenvolvimento. Para o teste da integração funcionar, carregue a extensão no mesmo navegador usado para abrir o painel.
+Painel local: `http://127.0.0.1:4180/`. Fluxo do editor: [DESENVOLVIMENTO.md](DESENVOLVIMENTO.md). Fonte da extensão: `extension/`. Reconstrua o ZIP com `npm run package:connector` somente quando alterar esses fontes.
 
-Os testes do site cobrem os dados, o fluxo de simulação, estados retornados pelo conector e a preparação das fotos. O ZIP do conector inclui os testes do gerenciador de tarefas, validação e restrição por origem. Testes simulados não substituem a validação da interface atual do Facebook.
+`npm run check` confere o ZIP, os módulos compartilhados, a migração de dados, as regras de preparação, os retornos do conector e o registro de publicação/venda. Testes automatizados não comprovam a interface atual do Facebook.
 
-## Netlify e repositório
+A branch de desenvolvimento não publica automaticamente. O Netlify acompanha `main`, com comando `npm run build` e pasta `dist`. Esta revisão ainda precisa de validação real antes de publicar.
 
-Publicação a partir da branch `main`, comando `npm test`, pasta `.` conforme `netlify.toml`. Não há variáveis de ambiente, banco remoto ou autenticação do painel. O controle de acesso do repositório pode ser administrado pelo proprietário independentemente da demonstração pública.
+## Publicação preparada em 05/11/2026
 
-`pulse-prototipo-extensao.zip` preserva a versão anterior Pátio 0.4 para referência. O arquivo atualizado é **pulse-conector.zip**.
-
-Prompts e origem das imagens: `ASSETS.md`. Sem licença de redistribuição definida pelo proprietário.
+`npm run build` valida o projeto e gera `dist/` somente com os arquivos públicos. Também cria `../pulse-publicacao.zip` para atualização manual do site existente no Netlify. O arquivo `release.json` identifica a versão e o hash da publicação. Credenciais, configuração do editor, arquivos de trabalho e dados do navegador ficam fora do pacote.

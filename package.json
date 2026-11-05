@@ -1,12 +1,16 @@
 {
-  "name": "pulse-demo",
-  "version": "1.2.1",
+  "name": "pulse",
+  "version": "1.4.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test demo.test.js facebook.test.js bridge-client.test.js",
+    "test": "node --test --test-concurrency=1 inventory.test.js ui-state.test.js demo.test.js facebook.test.js bridge-client.test.js extension/tests/model.test.js extension/tests/task-manager.test.js extension/tests/bridge-policy.test.js extension/tests/panel-bridge.test.js scripts/check-release.test.mjs scripts/create-zip.test.mjs scripts/build-site.test.mjs",
+    "test:site": "node --test --test-concurrency=1 inventory.test.js ui-state.test.js facebook.test.js bridge-client.test.js",
+    "test:extension": "node --test --test-concurrency=1 extension/tests/model.test.js extension/tests/task-manager.test.js extension/tests/bridge-policy.test.js extension/tests/panel-bridge.test.js",
+    "check": "node scripts/check.mjs",
+    "package:connector": "node scripts/package-extension.mjs",
     "start": "node serve.mjs",
-    "build": "node --test demo.test.js facebook.test.js bridge-client.test.js"
+    "build": "node scripts/check.mjs && node scripts/build-site.mjs"
   },
   "engines": {
     "node": ">=20"

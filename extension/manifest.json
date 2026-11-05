@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Pulse • Conector Marketplace",
+  "version": "0.5.2",
+  "description": "Cadastro local de veículos e preparação assistida de anúncios para revisão humana.",
+  "permissions": ["storage"],
+  "background": {"service_worker": "background.js", "type": "module"},
+  "action": {"default_title": "Abrir Pulse"},
+  "content_scripts": [
+    {"matches": ["https://www.facebook.com/marketplace/*","https://web.facebook.com/marketplace/*"], "js": ["content.js"], "run_at": "document_idle"},
+    {"matches": ["http://127.0.0.1/*","https://pulse-vendas-demo.netlify.app/*"], "js": ["panel-bridge.js"], "run_at": "document_start"}
+  ]
+}

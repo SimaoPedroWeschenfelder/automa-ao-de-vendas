@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Pulse: Validar antes do commit",
+      "type": "process",
+      "command": "node",
+      "args": ["scripts/check.mjs"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": [],
+      "runOptions": { "instanceLimit": 1 },
+      "presentation": { "reveal": "always", "panel": "shared", "clear": true }
+    },
+    {
+      "label": "Pulse: Iniciar painel local",
+      "type": "process",
+      "command": "node",
+      "args": ["serve.mjs"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "isBackground": true,
+      "problemMatcher": [],
+      "runOptions": { "instanceLimit": 1 },
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Pulse: Atualizar ZIP do conector",
+      "type": "process",
+      "command": "node",
+      "args": ["scripts/package-extension.mjs"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": [],
+      "runOptions": { "instanceLimit": 1 }
+    }
+  ]
+}
