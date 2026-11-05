@@ -1,45 +1,40 @@
 # Continuidade da Pulse
 
-## Estado atual — 04/11/2026
+## Publicação concluída — 05/11/2026
 
-O usuário pediu uma interface menor e a saída da demonstração para uso real. Painel 1.4.0, conector preservado em 0.5.2.
+- Site: https://pulse-vendas-demo.netlify.app/
+- Painel publicado: 1.4.0. Conector preservado em 0.5.2.
+- Commit de produção: ae7e3c02f29923e033eda075134a53dbb52150f1.
+- Netlify deploy: 6aecd9488c00cb809e1fa43d, confirmado como **Published deploy**.
+- Detalhes: https://app.netlify.com/projects/pulse-vendas-demo/deploys/6aecd9488c00cb809e1fa43d
+- release.json público verificado: b270d8780d1cd28d1ddee5a9957fc883507da66d49bd1ec4d9fffd687f774bab, igual ao build local.
+- 55 testes aprovados, conector/ZIP conferidos e hook de commit aprovado. Interface pública carregou sem erros de console.
+- Captura: ../pulse-publicado-netlify.png. A aba pública foi deixada aberta; abas auxiliares foram fechadas.
 
-- Pasta canônica: `outputs/Pulse`. Branch `dev/ambiente-vscode`, base `origin/main` 6522ffe.
-- Mudanças ainda sem commit/push. Produção no Netlify não foi atualizada.
-- Sem sidebar, métricas, roteiro, simulação ou Webmotors. Estoque, busca, filtro, cadastro em duas etapas e aviso persistente de preparação.
-- Dados operacionais no novo IndexedDB `pulse-workspace-v1`; banco da demo preservado. Copia cadastros próprios como rascunhos com revisão obrigatória; exemplos padrão não entram no estoque real.
-- Envio real exige campos essenciais e foto própria. Não injeta texto de demonstração nem usa imagem ilustrativa.
-- Publicação é manual no Facebook. O painel registra o link do anúncio; venda atualiza apenas o estoque local. Não prometer exclusão automática.
-- Backup JSON pelo rodapé; armazenamento continua local, sem login ou sincronização entre dispositivos.
-- Conector e ZIP não foram alterados nesta revisão. Módulos compartilhados continuam sincronizados.
+O usuário autorizou expressamente o envio do commit para main e a publicação. Foi feito push normal, sem force, pelo Git local. Netlify publicou automaticamente em 11 segundos. Nenhum repositório foi desvinculado nem foram criadas credenciais adicionais.
 
-## Validação
+## Retomar o desenvolvimento
 
-Validação final: 52 testes passaram em npm run check, ZIP e fontes do conector 0.5.2 conferidos.
+Pasta canônica: outputs/Pulse. Repositório: https://github.com/SimaoPedroWeschenfelder/automa-ao-de-vendas.git. Trabalhar na branch dev/ambiente-vscode; main acompanha a versão publicada. A branch de desenvolvimento também guarda este registro após o commit de produção.
 
-Foi recuperado o navegador por `browser-client.mjs` do plugin Browser, via Node REPL. `setupBrowserRuntime()` retorna o agente (não injeta global). IAB id 2, aba 1 em 127.0.0.1:4180. A interface carregou sem erros de console. Cadastro passou da etapa 1 para a 2, preservou dados ao voltar e foi cancelado sem salvar. Revisão em 320 px não apresentou transbordamento horizontal do formulário. Captura final em ../pulse-uso-real.png. Viewport temporária restaurada ao encerrar.
+- npm start: painel em http://127.0.0.1:4180/
+- npm run check: testes, compatibilidade e correspondência entre extension/ e pulse-conector.zip.
+- npm run build: valida e gera dist/ com 14 arquivos públicos e ../pulse-publicacao.zip.
+- npm run package:connector: reconstruir o ZIP somente após alterar extension/.
+- VS Code: Ctrl+Shift+B valida; F5 inicia um servidor. Não iniciar várias instâncias simultaneamente.
 
-O usuário relatou que alguns carros preencheram no Facebook. Não foi feito novo envio real nesta revisão. Aviso de conclusão foi validado nas regras automatizadas de transição; validar com o conector antes de publicar. Não usar o controle Windows para contornar o bloqueio anterior de identificação de URL.
+O build normaliza HTML/CSS/JS/SVG para produzir os mesmos bytes em Windows e Linux. A pasta dist/ fica ignorada no Git; Netlify usa npm run build e publica dist/. Arquivos locais, configuração do editor, credenciais e fontes de desenvolvimento não entram no pacote público.
 
-## Fluxo de trabalho
+A integração GitHub do plugin está na conta Tiago e tem apenas leitura deste repositório. O Git Credential Manager local tem acesso autenticado do proprietário. Usar Git local para commits/push; não enviar fontes pelo editor web do GitHub.
 
-Continuar a conversa aqui, editar arquivos locais vistos no VS Code. Ctrl+Shift+B valida; F5 ou npm start inicia somente um servidor 4180. Git pelo repositório local, sem upload pelo editor web do GitHub. Não mexer na outra janela/projeto do usuário. Não alterar as cópias arquivadas em pulse-demo/marketplace-piloto.
+## Produto e limites atuais
 
-## Reativação — 05/11/2026
+Estoque, busca, filtro, cadastro em duas etapas e aviso persistente de preparação. Sem simulação, métricas repetidas, roteiro ou Webmotors. Dados e fotos ficam no IndexedDB deste navegador/origem, sem login ou sincronização remota. Backup JSON no rodapé.
 
-Usuário autorizou explicitamente publicar a Pulse no Netlify para continuar o trabalho em breve. Site existente https://pulse-vendas-demo.netlify.app/ está acessível, mas ainda na versão antiga. Publicação da 1.4.0 está aguardando login no painel Netlify.
+Banco operacional: pulse-workspace-v1. O banco pulse-public-demo-v1 foi preservado: exemplos padrão ficam separados e cadastros próprios migram como rascunhos com revisão obrigatória. Fotos reais são exigidas para preparar; não entram imagens ilustrativas ou texto de teste na descrição.
 
-- npm run build passou com 54 testes e conferência do conector 0.5.2.
-- Novo scripts/build-site.mjs gera dist/ com 14 arquivos e ../pulse-publicacao.zip. Lista explícita impede publicação de fontes de desenvolvimento, credenciais ou arquivos locais.
-- netlify.toml agora usa npm run build e pasta dist/. O ZIP inclui _headers equivalente aos cabeçalhos configurados e release.json com versão/hash.
-- Pacote 1.4.0: SHA-256 de conteúdo 5ac537d7d05899902bad4a84b3a45ae07f5803f128a1bae345dca2f1d03e96d3.
-- CLI Netlify e gh não estão instaladas, sem configuração de autenticação Netlify local. Navegador IAB disponível por cua_repl; nenhum Chrome/Edge conectado à API de navegador nesta retomada.
-- Login do Netlify encaminhou a GitHub/Google e ainda está na tela de identificação. Usuário respondeu que entrou; foi solicitado esclarecer se concluiu a autenticação ou usou outro navegador. Não preencher credenciais por suposição.
+Preparar abre uma aba por carro, preenche e aguarda revisão humana. Publicação é manual no Facebook. O painel registra o link do anúncio publicado; marcar vendido atualiza apenas o estoque local. Não prometer retirada automática.
 
-### Publicação pelo Git local
+O usuário relatou que alguns carros preencheram no Facebook. Esta publicação validou o site e o pacote, sem novo envio de veículo à plataforma. Antes de modificar o preenchimento, testar campos, foto, cidade, preço, relatório, aviso e repetição do clique com uma extensão ativa e um cadastro autorizado. Não publicar um anúncio como parte do teste sem autorização específica.
 
-Login Netlify concluído na conta proprietária. A integração GitHub do plugin continua sem push, porém o Git Credential Manager local tem acesso ao repositório. Dry-run autenticado passou sem envio de alterações; origin/main continua na base 6522ffe. Publicar pelo Git local, mantendo o vínculo GitHub/Netlify existente. Não desvincular o repositório nem criar credenciais adicionais.
-
-O build normaliza finais de linha de HTML/CSS/JS/SVG para que Windows e Linux gerem os mesmos bytes. Conferir o hash final em dist/release.json e no site após o deploy.
-
-Build final conferido: 55 testes aprovados; versão 1.4.0; hash b270d8780d1cd28d1ddee5a9957fc883507da66d49bd1ec4d9fffd687f774bab. Próxima ação: commit local e envio sem force para main, autorizado pelo pedido de publicação de 05/11. Depois validar o deploy e release.json no endereço público.
+As pastas ../pulse-demo e ../marketplace-piloto são arquivos históricos, não fontes ativas.
